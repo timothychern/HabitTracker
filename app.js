@@ -2,7 +2,12 @@
 const express = require("express"),
 	  app = express(),
 	  bodyParser = require("body-parser"),
-	  mongoose = require("mongoose");
+	  mongoose = require("mongoose"),
+	  passport = require("passport"),
+	  LocalStrategy = require("passport-local");
+
+// require models
+const User = require("./models/user");
 
 // require routes
 const indexRoute = require("./routes/index");
@@ -14,7 +19,25 @@ mongoose.set('useUnifiedTopology', true);
 mongoose.connect("mongodb://localhost/habit_tracker");
 app.use(express.static(__dirname + "/public"));
 
-// to use routes
+// set up pasport
+app.use(require("express-session")({
+	secret: "Life is short",
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+app.use(function(req, res, next){
+	res.locals.currentUser = req.user;
+	//res.locals.error = req.flash("error");
+	//res.locals.success = req.flash("success");
+	next();
+});
+
+// to use routes 
 app.use(indexRoute);
 
 app.use(bodyParser.urlencoded({extended: true}));
