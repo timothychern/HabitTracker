@@ -6,7 +6,11 @@ const UserSchema = new mongoose.Schema({
 	firstName: String,
 	lastName: String,
 	username: String,
-	password: String
+	password: String,
+	habits: [{
+		type: mongoose.Schema.Types.ObjectId,
+        ref: "Habit"
+	}]
 });
 
 UserSchema.plugin(passportLocalMongoose);

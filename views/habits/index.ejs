@@ -1,0 +1,18 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+	<h1>
+		List of all your habits to track!
+	</h1>
+
+	<ul>
+		<% user.habits.forEach((habit) => { %>
+			<li><%= habit.name %></li>
+		<% }) %>
+	</ul>
+	
+	<a href="/habits/new">Track a new habit</a>
+</div>
+
+
+<%- include("../partials/footer") %>

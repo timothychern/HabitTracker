@@ -8,9 +8,11 @@ const express = require("express"),
 
 // require models
 const User = require("./models/user");
+const Habit = require("./models/habit");
 
 // require routes
 const indexRoute = require("./routes/index");
+const habitRoute = require("./routes/habits");
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -39,6 +41,7 @@ app.use(function(req, res, next){
 
 // to use routes 
 app.use(indexRoute);
+app.use('/habits', habitRoute);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
