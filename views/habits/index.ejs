@@ -7,7 +7,7 @@
 
 	<ul>
 		<% user.habits.forEach((habit) => { %>
-			<li><%= habit.name %></li>
+			<li><a href="/habits/<%= habit._id %>"><%= habit.name %></a></li>
 		<% }) %>
 	</ul>
 	

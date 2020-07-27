@@ -1,0 +1,50 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+	<h1>
+		Log for <%= habit.name %>
+	</h1>
+	
+		<% if (habit.logged.length > 0) { %>
+		<ul>
+			<% habit.logged.forEach(log => { %>
+				<li><strong><%= log.date %></strong> - <%= log.status %></li>
+			<% }) %>
+		</ul>
+ 		<% } else { %>
+	<p>
+		No logs yet
+	</p>
+		<% } %>
+	
+	
+		
+	<% let today = new Date() %>
+
+	<h3>
+		Add log for today
+	</h3>
+ 	
+	<% if (habit.logged.find(log => log.date === today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }))) { %>
+	<p>
+		You have already log for today! Continue the work!
+	</p>
+	<% } else { %>
+		<label for="status_form">Add log for today: <strong><%= today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }) %></strong></label>
+		
+<!--- TODO add action and method (should be a put method --->
+		<form id="status_form" action="/habits/<%= habit._id %>?_method=PUT" method="POST">
+			<select form="status_form" id="status_form" name="status">
+				<option value="done">Done</option>
+				<option value="skipped">Skipped</option>
+			</select>
+			<input type="submit">
+		</form>
+	<% } %>
+	
+	
+		
+	
+</div>
+
+<%- include("../partials/footer") %>

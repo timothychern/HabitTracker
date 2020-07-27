@@ -1,10 +1,16 @@
 <%- include("partials/header") %>
 
 <div class="container">
+	
 	<h1>
 		Landing page for habit tracker!
 	</h1>
 	<a href="/habits">Track my habits!</a>
+	<p>
+		<% let today = new Date() %>
+		Today is
+		<strong><%= today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }) %></strong>
+	</p>
 </div>
 
 

@@ -4,7 +4,9 @@ const express = require("express"),
 	  bodyParser = require("body-parser"),
 	  mongoose = require("mongoose"),
 	  passport = require("passport"),
-	  LocalStrategy = require("passport-local");
+	  LocalStrategy = require("passport-local"),
+	  seedDB = require("./seeds"),
+	  methodOverride = require("method-override");
 
 // require models
 const User = require("./models/user");
@@ -20,6 +22,11 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect("mongodb://localhost/habit_tracker");
 app.use(express.static(__dirname + "/public"));
+
+//seed the database
+seedDB(); 
+
+app.use(methodOverride("_method"));
 
 // set up pasport
 app.use(require("express-session")({

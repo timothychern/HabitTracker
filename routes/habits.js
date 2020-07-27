@@ -1,7 +1,8 @@
 const express = require("express"),
 	  router = express.Router({mergeParams: true}),
 	  bodyParser = require("body-parser"),
-	  middleware = require("../middleware");
+	  middleware = require("../middleware"),
+	  mongoose = require("mongoose");
 
 const User = require("../models/user");
 const Habit = require("../models/habit");
@@ -42,8 +43,6 @@ router.post("/",middleware.isLoggedIn, (req, res) => {
 					return res.redirect("/habits");
 				} 
 				else {
-					console.log(user);
-					console.log(habit);
 					user.habits.push(habit);
 					user.save();
 					res.redirect("/habits");
@@ -54,10 +53,45 @@ router.post("/",middleware.isLoggedIn, (req, res) => {
 });
 
 // SHOW
+router.get("/:habit_id", middleware.isLoggedIn, (req, res) => {
+	// need to check if user owns the habit (check if habit_id is in habits list)
+	if (!req.user.habits.includes(req.params.habit_id)){
+		console.log(req.user.habits);
+		console.log(req.params.habit_id);
+		res.send("you don't own this habit");
+	}
+	Habit.findById(req.params.habit_id, (err, habit) => {
+		if(err){
+			res.redirect('/habits');
+		} 
+		else {
+			res.render("habits/show", {habit: habit});
+		}
+	});
+	
+})
 
 // EDIT
 
 // UPDATE
+router.put("/:habit_id", middleware.isLoggedIn, (req, res) => {
+	Habit.findById(req.params.habit_id, (err, found_habit) => {
+		if(err){
+			res.redirect("back");
+		} else {
+			let status = req.body.status;
+			console.log(req.body); 
+			let today = new Date();
+			today = today.toLocaleDateString('en-US', { timeZone: 'America/New_York' });
+			//make sure today is not in logs already
+			//found_habit.logs[today] = status;
+			let new_log = {date: today, status: status};
+			found_habit.logged.push(new_log);
+			found_habit.save();
+			res.redirect(`/habits/${req.params.habit_id}`);
+		}
+	});
+});
 
 // DESTROY
 
