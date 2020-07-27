@@ -94,5 +94,13 @@ router.put("/:habit_id", middleware.isLoggedIn, (req, res) => {
 });
 
 // DESTROY
+router.delete("/:habit_id", middleware.isLoggedIn, (req, res) => {
+	Habit.findByIdAndRemove(req.params.habit_id, (err) => {
+		if(err) {
+			res.redirect("back");
+		}
+		res.redirect("/habits")
+	});
+});
 
 module.exports = router;

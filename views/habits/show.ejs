@@ -27,7 +27,7 @@
  	
 	<% if (habit.logged.find(log => log.date === today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }))) { %>
 	<p>
-		You have already log for today! Continue the work!
+		You have already log for today! Come back tomorrow!
 	</p>
 	<% } else { %>
 		<label for="status_form">Add log for today: <strong><%= today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }) %></strong></label>
@@ -43,7 +43,13 @@
 	<% } %>
 	
 	
-		
+	<a href="/habits">Return</a>
+	
+	<form action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
+		<button type="submit">
+			Delete
+		</button>
+	</form>
 	
 </div>
 
