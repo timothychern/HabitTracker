@@ -22,11 +22,12 @@ router.post("/register", (req, res) => {
 							lastName: req.body.lastName});
 	User.register(newUser, req.body.password, (err, user) => {
 		if (err) {
-			console.log(err);
+			req.flash("error", err);
 			return res.redirect("/register");
 		} 
 		else {
 			passport.authenticate("local")(req, res, () => {
+				req.flash("success", "Welcome to habit tracker!");
 				res.redirect("/");
 			});
 		}
@@ -39,14 +40,15 @@ router.get("/login", (req, res) => {
 
 router.post("/login", passport.authenticate("local", {
 	successRedirect: "/",
-	failureRedirect: "/login"
+	failureRedirect: "/login",
+	failureFlash: true
 }), (req, res) => {
 	//nothing 
 });
 
 router.get("/logout", (req, res) => {
 	req.logout();
-	//req.flash("success", "Logged you out, see you soon!");
+	req.flash("success", "Logged you out, see you soon!");
 	res.redirect("/");
 });
 

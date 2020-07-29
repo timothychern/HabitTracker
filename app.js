@@ -6,7 +6,8 @@ const express = require("express"),
 	  passport = require("passport"),
 	  LocalStrategy = require("passport-local"),
 	  seedDB = require("./seeds"),
-	  methodOverride = require("method-override");
+	  methodOverride = require("method-override"), 
+	  flash = require("connect-flash");
 
 // require models
 const User = require("./models/user");
@@ -24,9 +25,10 @@ mongoose.connect("mongodb://localhost/habit_tracker");
 app.use(express.static(__dirname + "/public"));
 
 //seed the database
-seedDB(); 
+//seedDB(); 
 
 app.use(methodOverride("_method"));
+app.use(flash());
 
 // set up pasport
 app.use(require("express-session")({
@@ -41,10 +43,12 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
-	//res.locals.error = req.flash("error");
-	//res.locals.success = req.flash("success");
+	res.locals.error = req.flash("error");
+	res.locals.success = req.flash("success");
 	next();
 });
+
+passport.authenticate('local', { failureFlash: 'Invalid username or password.' });
 
 // to use routes 
 app.use(indexRoute);
