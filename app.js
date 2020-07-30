@@ -19,7 +19,9 @@ const Habit = require("./models/habit");
 const indexRoute = require("./routes/index");
 const habitRoute = require("./routes/habits");
 
-console.log(process.env.DATABASEURL);
+let url = process.env.DATABASEURL || "mongodb://localhost/habit_tracker"
+
+//console.log(url);
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -27,7 +29,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 // mongoose.connect("mongodb://localhost/habit_tracker");
 // mongoose.connect("mongodb+srv://timothychern:WIvPNOwLiCQVSgQ8@cluster0.2drpu.mongodb.net/<dbname>?retryWrites=true&w=majority", {
-mongoose.connect(process.env.DATABASEURL);
+mongoose.connect(url);
 app.use(express.static(__dirname + "/public"));
 
 //seed the database
