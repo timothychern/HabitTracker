@@ -1,0 +1,20 @@
+.square-done {
+	border-radius: 10%;
+	background-color: red;
+	width: 100%;
+	padding-top: 8.33%;
+}
+
+.square-skipped {
+	border-radius: 10%;
+	background-color: blue;
+	width: 100%;
+	padding-top: 8.33%;
+}
+
+.square-0 {
+	border-radius: 10%;
+	background-color: white;
+	width: 100%;
+	padding-top: 8.33%;
+}

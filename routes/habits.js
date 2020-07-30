@@ -19,7 +19,13 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
 			res.redirect("/");
 		}
 		else {
-			res.render("habits/index", {user: user});
+			let cur_week=[];
+			let today = new Date()
+			for(let i=6; i>=0; i--){
+				let week_day = new Date(today - i*24*60*60*1000);
+				cur_week.push(week_day.toLocaleDateString('en-US', { timeZone: 'America/New_York' }));
+			}
+			res.render("habits/index", {user: user, curWeek: cur_week});
 		}
 	});
 });

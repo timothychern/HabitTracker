@@ -1,17 +1,62 @@
 <%- include("../partials/header") %>
 
-<div class="container">
+<div class="container mt-2">
 	<h1>
-		List of all your habits to track!
+		Your Habits
 	</h1>
 
-	<ul>
+	<!--- ul format --->
+	<!-- <ul>
 		<% user.habits.forEach((habit) => { %>
 			<li><a href="/habits/<%= habit._id %>"><%= habit.name %></a></li>
 		<% }) %>
-	</ul>
+	</ul> -->
 	
-	<a href="/habits/new">Track a new habit</a>
+	<!--- row/col format with bootstrap --->
+	
+	<div class="row mb-1">
+		<div class="col-4">
+			
+		</div>
+		<div class="col">
+			<div class="row justify-content-between">
+				<% curWeek.forEach(day => { %>
+					<div class="col-1 p-0 text-center">
+						<%= day.substring(0,4) %>
+					</div>
+				<% }) %>
+			</div>
+			
+		</div>
+		
+	</div>
+	
+	<% user.habits.forEach((habit) => { %>
+		<div class="row mb-1">
+			<div class="col-4 my-auto">
+				<h4><a href="/habits/<%= habit._id %>"><%= habit.name %></a></h4>
+			</div>
+			<div class="col">
+				<div class="row justify-content-between">
+					<% curWeek.forEach(day => { %>
+						<% let status = habit.logged.find(log => log.date === day) %>
+						<% status = status ? status.status : "0" %>
+						<div class="col-1 square-<%= status %>">
+						</div>
+					<% }) %>
+					
+					
+					
+				</div>
+				
+			</div>
+		</div>
+	<% }) %>
+	
+	
+	
+	
+	<a href="/habits/new" class="btn btn-outline-primary mt-4"><i class="fas fa-plus"></i> New Habit</a>
 </div>
 
 
