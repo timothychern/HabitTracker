@@ -3,8 +3,20 @@
 <div class="container">
 	
 	<h1>
-		Landing page for habit tracker!
+		Habit Track
 	</h1>
+	
+	<% if (currentUser) { %>
+		<h5>
+			Welcome back <%= currentUser.firstName %>!
+		</h5>
+	<% } else { %>
+		<h5>
+			Welcome to Habit tracker, Log in or Sign up to see more!
+		</h5>
+	<% } %>
+	
+	
 	<a href="/habits">Track my habits!</a>
 	<p>
 		<% let today = new Date() %>
