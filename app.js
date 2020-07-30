@@ -9,6 +9,8 @@ const express = require("express"),
 	  methodOverride = require("method-override"), 
 	  flash = require("connect-flash");
 
+
+
 // require models
 const User = require("./models/user");
 const Habit = require("./models/habit");
@@ -17,11 +19,15 @@ const Habit = require("./models/habit");
 const indexRoute = require("./routes/index");
 const habitRoute = require("./routes/habits");
 
+console.log(process.env.DATABASEURL);
+
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect("mongodb://localhost/habit_tracker");
+// mongoose.connect("mongodb://localhost/habit_tracker");
+// mongoose.connect("mongodb+srv://timothychern:WIvPNOwLiCQVSgQ8@cluster0.2drpu.mongodb.net/<dbname>?retryWrites=true&w=majority", {
+mongoose.connect(process.env.DATABASEURL);
 app.use(express.static(__dirname + "/public"));
 
 //seed the database
