@@ -1,14 +1,17 @@
 <%- include("../partials/header") %>
 
-<h1>
-	Add a new habit to track!
-</h1>
+<div class="container">
+	<h1>
+		Add a new habit to track!
+	</h1>
 
-<form action="/habits" method="POST">
-	<label for="habitName">New Habit To Track:</label>
-	<input id="habitName" type="text" name="habit[name]" placeholder="New Habit">
-	
-	<input type="submit">
-</form>
+	<form action="/habits" method="POST" class="mt-5">
+		<label for="habitName">New Habit To Track: </label>
+		<input id="habitName" type="text" name="habit[name]" placeholder="New Habit"><br>
+
+		<input type="submit">
+	</form>
+</div>
+
 
 <%- include("../partials/footer") %>

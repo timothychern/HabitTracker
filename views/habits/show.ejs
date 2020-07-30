@@ -20,34 +20,38 @@
 	
 		
 	<% let today = new Date() %>
+	
+	<div class="mb-5">
 
 	<h3>
 		Add log for today
 	</h3>
  	
-	<% if (habit.logged.find(log => log.date === today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }))) { %>
-	<p>
-		You have already log for today! Come back tomorrow!
-	</p>
-	<% } else { %>
-		<label for="status_form">Add log for today: <strong><%= today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }) %></strong></label>
+		<% if (habit.logged.find(log => log.date === today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }))) { %>
+		<p>
+			You have already log for today! Come back tomorrow!
+		</p>
+		<% } else { %>
+			<label for="status_form">Add log for today: <strong><%= today.toLocaleDateString('en-US', { timeZone: 'America/New_York' }) %></strong></label>
+
+	<!--- TODO add action and method (should be a put method --->
+			<form id="status_form" action="/habits/<%= habit._id %>?_method=PUT" method="POST">
+				<select form="status_form" id="status_form" name="status">
+					<option value="done">Done</option>
+					<option value="skipped">Skipped</option>
+				</select>
+				<input type="submit">
+			</form>
+		<% } %>
 		
-<!--- TODO add action and method (should be a put method --->
-		<form id="status_form" action="/habits/<%= habit._id %>?_method=PUT" method="POST">
-			<select form="status_form" id="status_form" name="status">
-				<option value="done">Done</option>
-				<option value="skipped">Skipped</option>
-			</select>
-			<input type="submit">
-		</form>
-	<% } %>
+	</div>
 	
 	
-	<a href="/habits">Return</a>
+	<a href="/habits" class="btn btn-primary btn-lg">Return</a>
 	
-	<form action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
-		<button type="submit">
-			Delete
+	<form action="/habits/<%= habit._id %>?_method=DELETE" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-danger btn-lg">
+			Delete Habit
 		</button>
 	</form>
 	
