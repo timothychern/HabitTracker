@@ -19,7 +19,7 @@ const Habit = require("./models/habit");
 const indexRoute = require("./routes/index");
 const habitRoute = require("./routes/habits");
 
-let url = process.env.DATABASEURL || "mongodb://localhost/habit_tracker"
+let url = process.env.DATABASEURL || "mongodb://localhost/habit_tracker";
 
 //console.log(url);
 
@@ -66,6 +66,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
 	console.log("Habit Tracker started!");
 })
